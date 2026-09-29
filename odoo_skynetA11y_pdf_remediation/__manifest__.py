@@ -13,7 +13,7 @@
     'data': [
         'data/ir_config_parameter_data.xml',
         'website/dashboard_page.xml',
-        'views/odoo_skynetA11y_pdf_remediation_menu.xml',
+        'views/odoo_skynetA11y_pdf_remediation_v18_menu.xml',
     ],
     'images': ['static/description/banner.jpg'],
     'installable': True,

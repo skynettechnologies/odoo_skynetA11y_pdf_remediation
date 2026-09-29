@@ -14,17 +14,14 @@
         about why the provisioning API key is included here.
 
         Access is restricted with group_ids on the view itself, so only
-        Settings/Administration users (base.group_system) can open it.
-
-        Note: Odoo 19 renamed this field from `groups_id` to `group_ids`
-        on ir.ui.view (odoo/odoo#98551) - use group_ids for 19.0+.-->
-    <record id="view_odoo_skynetA11y_pdf_remediation_dashboard_page" model="ir.ui.view">
+        Settings/Administration users (base.group_system) can open it.-->
+    <record id="view_odoo_skynetA11y_pdf_remediation_v18_dashboard_page" model="ir.ui.view">
         <field name="name">pdf.remediation.dashboard.page</field>
         <field name="type">qweb</field>
-        <field name="key">odoo_skynetA11y_pdf_remediation.dashboard_page</field>
-        <field name="group_ids" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="key">odoo_skynetA11y_pdf_remediation_v18.dashboard_page</field>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
         <field name="arch" type="xml">
-            <t t-name="odoo_skynetA11y_pdf_remediation.dashboard_page">
+            <t t-name="odoo_skynetA11y_pdf_remediation_v18.dashboard_page">
 
                 <!--
                     accountName / accountEmail fall back to the signed-in Odoo user's
@@ -40,20 +37,20 @@
                 <t t-set="skyneta11y_user_email" t-value="request.env.user.email or request.env.user.login or ''"/>
 
                 <t t-set="skyneta11y_config" t-value="{
-                    'apiBaseUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.api_base_url', 'https://livepdfapi.skynettechnologies.us'),
-                    'provisionApiKey': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.provision_api_key', ''),
-                    'accountName': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.account_name', '') or skyneta11y_user_name,
-                    'accountEmail': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.account_email', '') or skyneta11y_user_email,
-                    'website': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.website', ''),
-                    'activeDomain': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.active_domain', ''),
-                    'planId': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.plan_id', 'free'),
-                    'country': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.country', 'US'),
-                    'dashboardUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.dashboard_url', 'https://ada.skynettechnologies.us'),
-                    'upgradeUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.upgrade_url', ''),
-                    'sessionUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.session_url', ''),
-                    'csrfToken': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.csrf_token', ''),
-                    'initialTab': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.initial_tab', ''),
-                    'tokenKey': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation.token_key', 'skyneta11y_token'),
+                    'apiBaseUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.api_base_url', 'https://livepdfapi.skynettechnologies.us'),
+                    'provisionApiKey': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.provision_api_key', ''),
+                    'accountName': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.account_name', '') or skyneta11y_user_name,
+                    'accountEmail': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.account_email', '') or skyneta11y_user_email,
+                    'website': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.website', ''),
+                    'activeDomain': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.active_domain', ''),
+                    'planId': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.plan_id', 'free'),
+                    'country': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.country', 'US'),
+                    'dashboardUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.dashboard_url', 'https://ada.skynettechnologies.us'),
+                    'upgradeUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.upgrade_url', ''),
+                    'sessionUrl': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.session_url', ''),
+                    'csrfToken': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.csrf_token', ''),
+                    'initialTab': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.initial_tab', ''),
+                    'tokenKey': request.env['ir.config_parameter'].sudo().get_param('odoo_skynetA11y_pdf_remediation_v18.token_key', 'skyneta11y_token'),
                     'accountKey': request.env.cr.dbname,
                 }"/>
 
@@ -69,7 +66,7 @@
                             href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&amp;family=Rubik:ital,wght@0,300..900;1,300..900&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap"
                             rel="stylesheet"/>
 
-                        <link rel="stylesheet" href="/odoo_skynetA11y_pdf_remediation/static/src/css/odoo_skynetA11y_pdf_remediation.css"/>
+                        <link rel="stylesheet" href="/odoo_skynetA11y_pdf_remediation_v18/static/src/css/odoo_skynetA11y_pdf_remediation_v18.css"/>
 
                         <!-- Resolved config, made available as window.SKYNETA11Y_CONFIG for
                              js/config.js to merge over its own defaults. See the
@@ -159,7 +156,7 @@
                                     <span style="color:var(--accent)">Unencrypted files</span>
                                   </div>
                                   <div class="dz-note" style="padding-bottom:18px;margin-top:0">
-                                    <span>Password-protected PDF's are Not Supported</span>
+                                    <span>Password-protected PDF's are not Supported</span>
                                   </div>
                                 </div>
 
@@ -511,7 +508,7 @@
                               <!-- Full-screen table loader-->
                               <div class="aioa_dashboard-fullscreen-loader" id="tableLoader" role="alert" aria-live="polite" hidden="hidden">
                                 <div class="aioa_dashboard-loader">
-                                  <img src="/odoo_skynetA11y_pdf_remediation/static/src/img/icon-spinner.svg" alt="" />
+                                  <img src="/odoo_skynetA11y_pdf_remediation_v18/static/src/img/icon-spinner.svg" alt="" />
                                   <span class="visually-hidden">Loading page…</span>
                                 </div>
                               </div>
@@ -523,25 +520,25 @@
 
 
                         <!-- Load order matters: each file defines a global the next one consumes.-->
-                        <script src="/odoo_skynetA11y_pdf_remediation/static/src/js/config.js"></script>
-                        <script src="/odoo_skynetA11y_pdf_remediation/static/src/js/icons.js"></script>
-                        <script src="/odoo_skynetA11y_pdf_remediation/static/src/js/account.js"></script>
-                        <script src="/odoo_skynetA11y_pdf_remediation/static/src/js/api.js"></script>
-                        <script src="/odoo_skynetA11y_pdf_remediation/static/src/js/app.js"></script>
+                        <script src="/odoo_skynetA11y_pdf_remediation_v18/static/src/js/config.js"></script>
+                        <script src="/odoo_skynetA11y_pdf_remediation_v18/static/src/js/icons.js"></script>
+                        <script src="/odoo_skynetA11y_pdf_remediation_v18/static/src/js/account.js"></script>
+                        <script src="/odoo_skynetA11y_pdf_remediation_v18/static/src/js/api.js"></script>
+                        <script src="/odoo_skynetA11y_pdf_remediation_v18/static/src/js/app.js"></script>
                     </body>
                 </html>
             </t>
         </field>
     </record>
 
-    <record id="website_page_odoo_skynetA11y_pdf_remediation_dashboard" model="website.page">
+    <record id="website_page_odoo_skynetA11y_pdf_remediation_v18_dashboard" model="website.page">
         <field name="url">/pdf-remediation-dashboard</field>
-        <field name="view_id" ref="view_odoo_skynetA11y_pdf_remediation_dashboard_page"/>
+        <field name="view_id" ref="view_odoo_skynetA11y_pdf_remediation_v18_dashboard_page"/>
         <field name="is_published">True</field>
         <field name="website_indexed">False</field>
     </record>
 
-    <record id="action_odoo_skynetA11y_pdf_remediation_dashboard_url" model="ir.actions.act_url">
+    <record id="action_odoo_skynetA11y_pdf_remediation_v18_dashboard_url" model="ir.actions.act_url">
         <field name="name">SkynetA11y PDF Remediation</field>
         <field name="url">/pdf-remediation-dashboard</field>
         <field name="target">self</field>

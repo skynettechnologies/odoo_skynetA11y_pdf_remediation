@@ -8,7 +8,7 @@
         model. The list/form views below just give them friendlier labels
         than the generic System Parameters grid.
     -->
-    <record id="view_odoo_skynetA11y_pdf_remediation_config_param_list" model="ir.ui.view">
+    <record id="view_odoo_skynetA11y_pdf_remediation_v18_config_param_list" model="ir.ui.view">
         <field name="name">pdf.remediation.config.param.list</field>
         <field name="model">ir.config_parameter</field>
         <field name="arch" type="xml">
@@ -19,7 +19,7 @@
         </field>
     </record>
 
-    <record id="view_odoo_skynetA11y_pdf_remediation_config_param_form" model="ir.ui.view">
+    <record id="view_odoo_skynetA11y_pdf_remediation_v18_config_param_form" model="ir.ui.view">
         <field name="name">pdf.remediation.config.param.form</field>
         <field name="model">ir.config_parameter</field>
         <field name="arch" type="xml">
@@ -50,44 +50,44 @@
         </field>
     </record>
 
-    <record id="action_odoo_skynetA11y_pdf_remediation_config_param" model="ir.actions.act_window">
+    <record id="action_odoo_skynetA11y_pdf_remediation_v18_config_param" model="ir.actions.act_window">
         <field name="name">SkynetA11y PDF Remediation Settings</field>
         <field name="res_model">ir.config_parameter</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[('key', 'in', [
-            'odoo_skynetA11y_pdf_remediation.api_base_url',
-            'odoo_skynetA11y_pdf_remediation.provision_api_key',
-            'odoo_skynetA11y_pdf_remediation.account_name',
-            'odoo_skynetA11y_pdf_remediation.account_email',
-            'odoo_skynetA11y_pdf_remediation.website',
-            'odoo_skynetA11y_pdf_remediation.plan_id',
-            'odoo_skynetA11y_pdf_remediation.country',
-            'odoo_skynetA11y_pdf_remediation.dashboard_url',
-            'odoo_skynetA11y_pdf_remediation.upgrade_url',
-            'odoo_skynetA11y_pdf_remediation.active_domain',
-            'odoo_skynetA11y_pdf_remediation.session_url',
-            'odoo_skynetA11y_pdf_remediation.csrf_token',
-            'odoo_skynetA11y_pdf_remediation.initial_tab',
-            'odoo_skynetA11y_pdf_remediation.token_key',
+            'odoo_skynetA11y_pdf_remediation_v18.api_base_url',
+            'odoo_skynetA11y_pdf_remediation_v18.provision_api_key',
+            'odoo_skynetA11y_pdf_remediation_v18.account_name',
+            'odoo_skynetA11y_pdf_remediation_v18.account_email',
+            'odoo_skynetA11y_pdf_remediation_v18.website',
+            'odoo_skynetA11y_pdf_remediation_v18.plan_id',
+            'odoo_skynetA11y_pdf_remediation_v18.country',
+            'odoo_skynetA11y_pdf_remediation_v18.dashboard_url',
+            'odoo_skynetA11y_pdf_remediation_v18.upgrade_url',
+            'odoo_skynetA11y_pdf_remediation_v18.active_domain',
+            'odoo_skynetA11y_pdf_remediation_v18.session_url',
+            'odoo_skynetA11y_pdf_remediation_v18.csrf_token',
+            'odoo_skynetA11y_pdf_remediation_v18.initial_tab',
+            'odoo_skynetA11y_pdf_remediation_v18.token_key',
         ])]</field>
         <field name="context">{'create': False, 'delete': False}</field>
     </record>
 
-    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_root"
+    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_v18_root"
               name="SkynetA11y PDF Remediation"
               sequence="60"
               groups="base.group_system"/>
 
-    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_dashboard"
+    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_v18_dashboard"
               name="Dashboard"
-              parent="menu_odoo_skynetA11y_pdf_remediation_root"
-              action="action_odoo_skynetA11y_pdf_remediation_dashboard_url"
+              parent="menu_odoo_skynetA11y_pdf_remediation_v18_root"
+              action="action_odoo_skynetA11y_pdf_remediation_v18_dashboard_url"
               sequence="10"/>
 
-    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_settings"
+    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_v18_settings"
               name="Configuration"
-              parent="menu_odoo_skynetA11y_pdf_remediation_root"
-              action="action_odoo_skynetA11y_pdf_remediation_config_param"
+              parent="menu_odoo_skynetA11y_pdf_remediation_v18_root"
+              action="action_odoo_skynetA11y_pdf_remediation_v18_config_param"
               sequence="20"/>
 
 </odoo>
