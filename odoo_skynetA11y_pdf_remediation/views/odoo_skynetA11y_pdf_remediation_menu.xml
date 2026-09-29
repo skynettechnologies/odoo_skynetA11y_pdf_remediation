@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        No custom model/fields are defined (Import Module does not load
+        Python), so this settings screen edits the ir.config_parameter rows
+        this module ships directly - key/value are stock fields on that
+        model. The list/form views below just give them friendlier labels
+        than the generic System Parameters grid.
+    -->
+    <record id="view_odoo_skynetA11y_pdf_remediation_config_param_list" model="ir.ui.view">
+        <field name="name">pdf.remediation.config.param.list</field>
+        <field name="model">ir.config_parameter</field>
+        <field name="arch" type="xml">
+            <list string="SkynetA11y PDF Remediation Settings" editable="bottom">
+                <field name="key" readonly="1" string="Setting"/>
+                <field name="value" string="Value"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_odoo_skynetA11y_pdf_remediation_config_param_form" model="ir.ui.view">
+        <field name="name">pdf.remediation.config.param.form</field>
+        <field name="model">ir.config_parameter</field>
+        <field name="arch" type="xml">
+            <form string="SkynetA11y PDF Remediation Settings">
+                <sheet>
+                    <group>
+                        <field name="key" readonly="1" string="Setting"/>
+                        <field name="value" string="Value"/>
+                    </group>
+                    <div class="text-muted" style="margin-top: 8px;">
+                        api_base_url: origin of the SkynetA11y PDF Remediation backend service.
+                        provision_api_key: X-Api-Key used to provision/sign in the account -
+                        required for the dashboard to work unless session_url is set instead.
+                        account_name / account_email / website: leave blank to let the
+                        on-screen dialog ask for them on first use; fill in both
+                        account_email and website to pin the account and skip the dialog.
+                        plan_id / country: sent on registration. dashboard_url / upgrade_url:
+                        where the plan-upgrade button sends the user. active_domain: domain
+                        the Website Scan tab crawls - leave blank to follow the account's own
+                        domain. session_url / csrf_token: point at your own server-side
+                        sign-in endpoint to avoid shipping provision_api_key to the browser
+                        at all. initial_tab: tab to open on load ('upload', 'scan' or
+                        'remediated') - leave blank to honour ?tab= in the URL. token_key:
+                        localStorage key the session token is cached under.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_odoo_skynetA11y_pdf_remediation_config_param" model="ir.actions.act_window">
+        <field name="name">SkynetA11y PDF Remediation Settings</field>
+        <field name="res_model">ir.config_parameter</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('key', 'in', [
+            'odoo_skynetA11y_pdf_remediation.api_base_url',
+            'odoo_skynetA11y_pdf_remediation.provision_api_key',
+            'odoo_skynetA11y_pdf_remediation.account_name',
+            'odoo_skynetA11y_pdf_remediation.account_email',
+            'odoo_skynetA11y_pdf_remediation.website',
+            'odoo_skynetA11y_pdf_remediation.plan_id',
+            'odoo_skynetA11y_pdf_remediation.country',
+            'odoo_skynetA11y_pdf_remediation.dashboard_url',
+            'odoo_skynetA11y_pdf_remediation.upgrade_url',
+            'odoo_skynetA11y_pdf_remediation.active_domain',
+            'odoo_skynetA11y_pdf_remediation.session_url',
+            'odoo_skynetA11y_pdf_remediation.csrf_token',
+            'odoo_skynetA11y_pdf_remediation.initial_tab',
+            'odoo_skynetA11y_pdf_remediation.token_key',
+        ])]</field>
+        <field name="context">{'create': False, 'delete': False}</field>
+    </record>
+
+    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_root"
+              name="SkynetA11y PDF Remediation"
+              sequence="60"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_dashboard"
+              name="Dashboard"
+              parent="menu_odoo_skynetA11y_pdf_remediation_root"
+              action="action_odoo_skynetA11y_pdf_remediation_dashboard_url"
+              sequence="10"/>
+
+    <menuitem id="menu_odoo_skynetA11y_pdf_remediation_settings"
+              name="Configuration"
+              parent="menu_odoo_skynetA11y_pdf_remediation_root"
+              action="action_odoo_skynetA11y_pdf_remediation_config_param"
+              sequence="20"/>
+
+</odoo>

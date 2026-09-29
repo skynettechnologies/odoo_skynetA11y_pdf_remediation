@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Default values only. noupdate="1" so a module upgrade never
+        overwrites a value the admin has already changed by hand under
+        Settings > SkynetA11y PDF Remediation > Configuration (or Technical >
+        Parameters > System Parameters).
+
+        There is no controllers.py/models.py in this build - Import Module
+        only loads XML/i18n/static assets, not Python - so the dashboard
+        page (website/dashboard_page.xml) prints these values straight into
+        window.SKYNETA11Y_CONFIG server-side, and js/config.js merges them over
+        its own defaults, exactly as it does in the original stand-alone
+        HTML build (js/config.js / js/account.js).
+
+        SECURITY NOTE (carried over from the source build's own README):
+        odoo_skynetA11y_pdf_remediation.provision_api_key is sent to the browser as part of
+        that config, because there is no server-side proxy to keep it back
+        on without Python. Anyone who views this page's source can read it
+        and open sessions for this site. That is unavoidable in this
+        data-only build; treat it the same as the original stand-alone
+        HTML build - fine for an internal/admin-only dashboard (this page
+        is restricted to base.group_system), but not something to expose
+        further. Setting odoo_skynetA11y_pdf_remediation.session_url to a server-side
+        session endpoint of your own instead avoids shipping the key at
+        all - see js/config.js's comment on `sessionUrl`.
+    -->
+    <data noupdate="1">
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_api_base_url" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.api_base_url</field>
+            <field name="value">https://livepdfapi.skynettechnologies.us</field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_provision_api_key" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.provision_api_key</field>
+            <field name="value">PDF-REMEDATION-PLAN-CHECK</field>
+        </record>
+
+        <!-- Account the page signs in as (see js/account.js). Leave account_name
+             and account_email blank to let the on-screen dialog ask for them the
+             first time an action needs the service; fill in both account_email
+             and website to pin the account and skip the dialog entirely. -->
+        <record id="odoo_skynetA11y_pdf_remediation_param_account_name" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.account_name</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_account_email" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.account_email</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_website" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.website</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_plan_id" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.plan_id</field>
+            <field name="value">free</field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_country" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.country</field>
+            <field name="value">US</field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_dashboard_url" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.dashboard_url</field>
+            <field name="value">https://ada.skynettechnologies.us</field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_upgrade_url" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.upgrade_url</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="odoo_skynetA11y_pdf_remediation_param_active_domain" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.active_domain</field>
+            <field name="value"></field>
+        </record>
+
+        <!-- Server-side session endpoint. When set, sign-in is a single POST to
+             it and provision_api_key above is never used or shipped to the
+             browser. Leave blank to keep the current (client-side) flow. -->
+        <record id="odoo_skynetA11y_pdf_remediation_param_session_url" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.session_url</field>
+            <field name="value"></field>
+        </record>
+
+        <!-- CSRF token for the POST above, when that endpoint requires one. -->
+        <record id="odoo_skynetA11y_pdf_remediation_param_csrf_token" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.csrf_token</field>
+            <field name="value"></field>
+        </record>
+
+        <!-- Tab to open on load: 'upload', 'scan' or 'remediated'. Leave blank
+             to open Upload and let ?tab= in the URL pick one. -->
+        <record id="odoo_skynetA11y_pdf_remediation_param_initial_tab" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.initial_tab</field>
+            <field name="value"></field>
+        </record>
+
+        <!-- localStorage key the session token is cached under in the
+             browser. Only change this if it clashes with another script on
+             the same page. -->
+        <record id="odoo_skynetA11y_pdf_remediation_param_token_key" model="ir.config_parameter">
+            <field name="key">odoo_skynetA11y_pdf_remediation.token_key</field>
+            <field name="value">skyneta11y_token</field>
+        </record>
+
+    </data>
+</odoo>
