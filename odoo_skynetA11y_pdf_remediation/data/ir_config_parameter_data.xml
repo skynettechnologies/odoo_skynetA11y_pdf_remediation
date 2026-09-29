@@ -78,7 +78,7 @@
 
         <record id="odoo_skynetA11y_pdf_remediation_param_active_domain" model="ir.config_parameter">
             <field name="key">odoo_skynetA11y_pdf_remediation.active_domain</field>
-            <field name="value"></field>
+            <field name="value">getgrav.skynettechnologies.us</field>
         </record>
 
         <!-- Server-side session endpoint. When set, sign-in is a single POST to

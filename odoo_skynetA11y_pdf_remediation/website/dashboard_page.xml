@@ -14,15 +14,12 @@
         about why the provisioning API key is included here.
 
         Access is restricted with group_ids on the view itself, so only
-        Settings/Administration users (base.group_system) can open it.
-
-        Note: Odoo 19 renamed this field from `groups_id` to `group_ids`
-        on ir.ui.view (odoo/odoo#98551) - use group_ids for 19.0+.-->
+        Settings/Administration users (base.group_system) can open it.-->
     <record id="view_odoo_skynetA11y_pdf_remediation_dashboard_page" model="ir.ui.view">
         <field name="name">pdf.remediation.dashboard.page</field>
         <field name="type">qweb</field>
         <field name="key">odoo_skynetA11y_pdf_remediation.dashboard_page</field>
-        <field name="group_ids" eval="[(6, 0, [ref('base.group_system')])]"/>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
         <field name="arch" type="xml">
             <t t-name="odoo_skynetA11y_pdf_remediation.dashboard_page">
 
@@ -82,7 +79,7 @@
 
                     <body>
                         <div style="padding:10px 16px;border-bottom:1px solid #ECEAF7;display:flex;align-items:center;justify-content:space-between;">
-                            <a href="/odoo" style="text-decoration:none;color:#420083;">&#8592; Back to Odoo</a>
+                            <a href="/web" style="text-decoration:none;color:#420083;">&#8592; Back to Odoo</a>
                         </div>
 
                         <div class="skyneta11y-app skyneta11y-embedded" data-theme="light" id="skyneta11yApp">
@@ -153,7 +150,7 @@
                                     </div>
                                   </div>
 
-                                   <div class="dz-note" style="padding-bottom:18px;margin-top:0">
+                                  <div class="dz-note" style="padding-bottom:18px;margin-top:0">
                                     <span>PDF format only</span><span class="dot">&#8226;</span>
                                     <span>Up to 50 MB</span><span class="dot">&#8226;</span>
                                     <span style="color:var(--accent)">Unencrypted files</span>

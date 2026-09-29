@@ -1,6 +1,6 @@
-# SkynetA11y PDF Remediation Remediation
+# AI PDF Accessibility Remediation
 
-The **SkynetA11y PDF Remediation Remediation Application** brings **PDF Accessibility Remediation for WCAG & PDF/UA Compliance** directly into your own Odoo instance. It is both a **PDF Accessibility Checker** and an **AI Remediation Tool**: upload documents or crawl your website for them, let AI repair the accessibility barriers automatically, review every check that was applied, and download conformant files — without leaving your own Odoo backend.
+The **AI PDF Accessibility Remediation Application** brings **PDF Accessibility Remediation for WCAG & PDF/UA Compliance** directly into your own Odoo instance. It is both a **PDF Accessibility Checker** and an **AI Remediation Tool**: upload documents or crawl your website for them, let AI repair the accessibility barriers automatically, review every check that was applied, and download conformant files — without leaving your own Odoo backend.
 
 It fixes the barriers that make PDFs unusable with assistive technology: missing tags, incorrect reading order, inaccessible forms and tables, images without alternate text, and absent document structure, language and metadata.
 
@@ -21,7 +21,7 @@ This application is designed for:
 
 ---
 
-## Why SkynetA11y PDF Remediation Remediation?
+## Why AI PDF Accessibility Remediation?
 
 PDFs are where accessibility compliance quietly fails. A site can pass every page-level audit and still publish hundreds of untagged documents — reports, forms, invoices, policies — that screen readers cannot navigate at all.
 
@@ -139,7 +139,7 @@ Partner with us as an agency to provide comprehensive accessibility solutions to
 
 ### **[Accessibility Affiliate Partnership](https://www.skynettechnologies.com/affiliate-partner)**
 
-Join our affiliate program and earn hefty commissions by promoting SkynetA11y PDF Remediation Remediation. Share our accessibility solution within your network and help businesses improve their document accessibility while generating additional revenue.
+Join our affiliate program and earn hefty commissions by promoting AI PDF Accessibility Remediation. Share our accessibility solution within your network and help businesses improve their document accessibility while generating additional revenue.
 
 For more details, please visit **[Accessibility Partnership Opportunities Page](https://www.skynettechnologies.com/partner-program)**.
 
@@ -147,4 +147,4 @@ For more details, please visit **[Accessibility Partnership Opportunities Page](
 
 ## Credits
 
-This **SkynetA11y PDF Remediation Remediation Application** (Odoo module v1.0.0, compatible with Odoo 16.0–19.0) is developed and maintained by **[Skynet Technologies USA LLC](https://www.skynettechnologies.com)**.
+This **AI PDF Accessibility Remediation Application** (Odoo module v1.0.0, compatible with Odoo 16.0–19.0) is developed and maintained by **[Skynet Technologies USA LLC](https://www.skynettechnologies.com)**.
