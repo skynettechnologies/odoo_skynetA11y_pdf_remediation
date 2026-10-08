@@ -116,19 +116,20 @@
       </p>
 
       <h2 id="installation-steps">Installation Steps</h2>
-      <p>
-         Odoo&#39;s <strong>Apps &rarr; Import Module</strong> zip-upload wizard is not reliable for this module &#8212; install it from a proper addons folder instead:
-      </p>
+      <p>This module is built for <strong>Odoo 20.0</strong>. Install it from an addons folder:</p>
       <ol>
-         <li>Download or extract the module, so you end up with a folder structured like <code>&lt;your-addons-path&gt;/pdf_remediation/</code>.</li>
-         <li>Make sure <code>&lt;your-addons-path&gt;</code> is listed in your Odoo config file (<code>odoo.conf</code>) under <code>addons_path</code>, or was passed via <code>--addons-path</code> when starting the server.</li>
-         <li>Restart the Odoo server so it picks up the new addons path.</li>
-         <li>In Odoo, go to <strong>Apps</strong>, click the <strong>&#8942;</strong> menu (enable Developer Mode first via <strong>Settings &rarr; General Settings &rarr; Developer Tools</strong> if it isn&#39;t showing), then click <strong>Update Apps List</strong>.</li>
-         <li>Clear the default &#34;Apps&#34; filter, search for <strong>&#34;SkynetA11y PDF Remediation&#34;</strong>, and click <strong>Activate</strong> (or <strong>Install</strong>).</li>
+         <li>Place the <code>odoo_skyneta11y_pdf_remediation</code> folder inside one of the directories listed in <code>addons_path</code> in your <code>odoo.conf</code>.</li>
+         <li>Make sure the Python <code>requests</code> package is available (it ships with every standard Odoo install).</li>
+         <li>Restart the Odoo server so it picks up the new addon.</li>
+         <li>In Odoo, enable Developer Mode, go to <strong>Apps</strong>, click <strong>Update Apps List</strong>, then search for <strong>&#34;SkynetA11y PDF Remediation&#34;</strong> and click <strong>Install</strong>.</li>
       </ol>
       <h3 id="activating-the-dashboard">Activating the Dashboard</h3>
       <p>
-         Once installed, open <strong>Settings &rarr; SkynetA11y PDF Remediation &rarr; Dashboard</strong> (visible to Settings/Administration users) to launch the workspace. Nothing else needs to be configured to activate it &#8212; the first time somebody opens the dashboard and uploads or scans a document, the short account dialog runs once and the module is fully active from there.
+         Open the <strong>SkynetA11y PDF Remediation</strong> app from the main menu (or go to <code>the Dashboard menu</code>). Nothing else needs to be configured &#8212; the first time somebody uploads or scans a document, a short account dialog runs once and the module is active from there. Administrators can pin the account, change the service URL or rotate the provisioning key under <strong>SkynetA11y PDF Remediation &rarr; Configuration</strong>.
+      </p>
+      <h3 id="access">Access</h3>
+      <p>
+         The dashboard is open to members of the <strong>SkynetA11y PDF Remediation / User</strong> group, which Settings/Administration users have automatically. The provisioning API key is stored in Odoo and used only on the server; it is never sent to the browser.
       </p>
 
       <h2 id="screenshots">Screenshots</h2>

@@ -1,12 +1,12 @@
-# SkynetA11y PDF Remediation Remediation
+# SkynetA11y PDF Remediation
 
-The **SkynetA11y PDF Remediation Remediation Application** brings **PDF Accessibility Remediation for WCAG & PDF/UA Compliance** directly into your own Odoo instance. It is both a **PDF Accessibility Checker** and an **AI Remediation Tool**: upload documents or crawl your website for them, let AI repair the accessibility barriers automatically, review every check that was applied, and download conformant files — without leaving your own Odoo backend.
+The **SkynetA11y PDF Remediation Application** brings **PDF Accessibility Remediation for WCAG & PDF/UA Compliance** directly into your own Odoo instance. It is both a **PDF Accessibility Checker** and an **AI Remediation Tool**: upload documents or crawl your website for them, let AI repair the accessibility barriers automatically, review every check that was applied, and download conformant files — without leaving your own Odoo backend.
 
 It fixes the barriers that make PDFs unusable with assistive technology: missing tags, incorrect reading order, inaccessible forms and tables, images without alternate text, and absent document structure, language and metadata.
 
 It supports compliance with **WCAG 2.0, 2.1, 2.2, PDF/UA, ADA, Section 508, AODA, and EN 301 549 (EAA)**. With plain-language explanations and before/after examples for every check, even non-technical users can understand what was fixed and why it mattered.
 
-This build is an **Odoo module** (`odoo_ai_pdf_remediation`, v1.0.0) — a normal Odoo addon with no extra bundler or build step — so it drops into any Odoo instance alongside whatever other apps and customizations your database already runs. It is compatible with **Odoo 16.0, 17.0, 18.0 and 19.0**.
+This is a standard **Odoo 20.0 module** (`odoo_skyneta11y_pdf_remediation`, v20.0.1.0.0) with no extra bundler or build step, so it drops into any Odoo 20 instance alongside your other apps.
 
 This application is designed for:
 
@@ -21,7 +21,7 @@ This application is designed for:
 
 ---
 
-## Why SkynetA11y PDF Remediation Remediation?
+## Why SkynetA11y PDF Remediation?
 
 PDFs are where accessibility compliance quietly fails. A site can pass every page-level audit and still publish hundreds of untagged documents — reports, forms, invoices, policies — that screen readers cannot navigate at all.
 
@@ -50,29 +50,39 @@ Remediating them by hand is slow and expensive. This application makes it a rout
 
 ## Installation
 
-### Method 1: Install from a folder 
+1. Copy the `odoo_skyneta11y_pdf_remediation` folder into a directory listed in `addons_path` (in `odoo.conf`).
+2. Restart Odoo.
+3. Enable **Developer Mode**, open **Apps**, choose **Update Apps List**, search for **SkynetA11y PDF Remediation** and click **Install**.
 
-1. **Get the module files.** Unzip the module so you have a folder named `odoo_pdf_remediation` on your computer.
-2. **Place it in your addons folder.** Copy that folder into the location where your Odoo instance keeps its extra apps (your IT team or hosting provider can tell you where this is if you're not sure — it's usually called something like `custom-addons`).
-3. **Restart Odoo.** This lets Odoo notice the new folder. If you're not the one managing the server, ask your admin or hosting provider to do this.
-4. **Turn on Developer Mode.** In Odoo, go to **Settings → General Settings**, scroll down, and turn on developer tools. (This is a one-time setting.)
-5. **Refresh the app list.** Go to **Apps**, click the three-dot menu (⋮) in the corner, and choose **Update Apps List**.
-6. **Find and install the app.** In the Apps search bar, clear any existing filter, type **"SkynetA11y PDF Remediation"**, and click **Activate** (or **Install**) on the app that appears.
+Open the **SkynetA11y PDF Remediation** app from the main menu, or go to **the **Dashboard** menu**. No further setup is required.
 
-You're done — no extra setup steps are needed. Once installed, you'll find the dashboard at **`/pdf-remediation-dashboard`** on your website.
+Requires Odoo 20.0 and the Python `requests` package. The earlier "Import Module" zip-upload route is no longer needed.
 
-### Method 2: Upload the zip file directly
+## Configuration
 
-This lets you install the module straight from your browser, without needing folder or server access. You will need your database's **Master Password** — this is set up by whoever configured your Odoo server, so check with them if you don't have it.
+**SkynetA11y PDF Remediation → Configuration** (Settings/Administration users) edits the module's system parameters: service URL, provisioning API key, pinned account (name / email / website), plan, country, dashboard and upgrade URLs, scan domain, opening tab and token storage key. Leave the account fields blank to let the dashboard ask on first use; fill in **both** email and website to pin the account and skip the dialog.
 
-1. **Turn on Developer Mode**, if it isn't already on (**Settings → General Settings**, scroll down to Developer Tools).
-2. Go to **Apps**, click the three-dot menu (⋮) in the corner, and choose **Import Module**.
-3. Click **Choose File**, select the module's `.zip` file, then click **Import Module**.
-4. When asked, enter your database's **Master Password** and confirm.
-5. Odoo will install the module automatically — no restart needed.
-6. Go to **Apps**, clear any existing filter, search for **"SkynetA11y PDF Remediation"**, and check that it now shows as **Installed**. If it doesn't install on its own, click **Install**.
+## Security
 
-**Having trouble with Method 2?** Switch to Method 1 above — it works more reliably for this module.
+- The dashboard requires login and membership of the **SkynetA11y PDF Remediation / User** group (implied by Settings/Administration).
+- The **provisioning API key never reaches the browser.** The page posts the account details (with a CSRF token) to `/pdf-remediation/session`; the Odoo server adds the key, calls the remediation service and returns only the session token.
+- Remediation requests (uploads, jobs, downloads) go from the browser to the remediation service with that token, which is why the CORS settings below still apply.
+
+## Module Structure
+
+```
+odoo_skyneta11y_pdf_remediation/
+├── __manifest__.py
+├── controllers/main.py        # dashboard page + server-side session endpoint
+├── models/res_config_settings.py
+├── security/security.xml      # group + privilege
+├── data/ir_config_parameter_data.xml
+├── views/                     # dashboard template, settings view, menus
+├── static/src/{css,js,img}    # standalone workspace (own asset bundle)
+├── static/description/        # icon, banner, Apps page
+├── i18n/*.pot
+└── tests/
+```
 
 ## How It Works
 
@@ -139,7 +149,7 @@ Partner with us as an agency to provide comprehensive accessibility solutions to
 
 ### **[Accessibility Affiliate Partnership](https://www.skynettechnologies.com/affiliate-partner)**
 
-Join our affiliate program and earn hefty commissions by promoting SkynetA11y PDF Remediation Remediation. Share our accessibility solution within your network and help businesses improve their document accessibility while generating additional revenue.
+Join our affiliate program and earn hefty commissions by promoting SkynetA11y PDF Remediation. Share our accessibility solution within your network and help businesses improve their document accessibility while generating additional revenue.
 
 For more details, please visit **[Accessibility Partnership Opportunities Page](https://www.skynettechnologies.com/partner-program)**.
 
@@ -147,4 +157,16 @@ For more details, please visit **[Accessibility Partnership Opportunities Page](
 
 ## Credits
 
-This **SkynetA11y PDF Remediation Remediation Application** (Odoo module v1.0.0, compatible with Odoo 16.0–19.0) is developed and maintained by **[Skynet Technologies USA LLC](https://www.skynettechnologies.com)**.
+This **SkynetA11y PDF Remediation Application** (Odoo module v20.0.1.0.0, for Odoo 20.0) is developed and maintained by **[Skynet Technologies USA LLC](https://www.skynettechnologies.com)**.
+
+## Install options (data-only module)
+
+This module contains no Python code, so both of these work:
+
+- **Apps > Import Module**: upload the zip (developer mode, administrator).
+- **Extract**: put the `odoo_skyneta11y_pdf_remediation` folder in `addons_path`, restart, Update Apps List, Install.
+
+The dashboard opens inside Odoo from the **SkynetA11y PDF Remediation > Dashboard** menu (a client action that hosts the page in an iframe, because Odoo serves files of imported modules with a CSP that blocks a standalone static page). Settings are the module's
+system parameters under **SkynetA11y PDF Remediation > Configuration**. In this build the browser calls the
+provisioning endpoint itself, so the provisioning API key is passed to the page (it is not hidden
+from users who can open the dashboard).

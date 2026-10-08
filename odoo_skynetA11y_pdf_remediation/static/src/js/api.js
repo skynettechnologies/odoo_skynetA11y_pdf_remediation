@@ -1,3 +1,4 @@
+/** @odoo-module ignore */
 /*
  * API layer for the SkynetA11y PDF Remediation service.
  *
@@ -210,12 +211,13 @@
   }
 
   /**
-   * POST {apiBaseUrl}/api/billing/provision-account — registers and signs in.
-   *
-   * `identity` is the name/email/domain somebody submitted; omit it and the one
-   * already connected is used. Rejects on failure so the details dialog can show
-   * the service's own reason (a rejected domain, a malformed address) instead of
-   * a generic "could not sign in".
+   * Registers/signs in the account and stores the session token: through the
+   * Odoo controller when `sessionUrl` is set, otherwise directly against the
+   * service (the data-only build).
+   * `identity` is the name/email/domain somebody submitted; omit it and the
+   * one already connected is used. Rejects on failure so the details dialog can
+   * show the service's own reason (a rejected domain, a malformed address)
+   * instead of a generic "could not sign in".
    */
   function provisionSession(identity) {
     var c = config();
@@ -223,81 +225,83 @@
 
     if (!who) return Promise.resolve(false);
 
-    return fetch(apiUrl('/billing/provision-account'), {
+    if (c.sessionUrl) return provisionViaOdoo(c, who);
+
+    return provisionDirect(c, who);
+  }
+
+  /** Controller-backed sign-in (key stays on the Odoo server). */
+  function provisionViaOdoo(c, who) {
+    var body = new URLSearchParams();
+
+    body.set('csrf_token', c.csrfToken || '');
+    body.set('name', who.name);
+    body.set('email', who.email);
+    body.set('domain', who.domain);
+
+    return fetch(c.sessionUrl, {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      credentials: 'same-origin',
+      body: body
+    }).then(readSession);
+  }
+
+  /**
+   * Data-only sign-in: the browser calls the service's provisioning endpoint
+   * itself, with the key from System Parameters.
+   */
+  function provisionDirect(c, who) {
+    if (!c.provisionApiKey) {
+      return Promise.reject(
+        ApiError(500, {
+          error:
+            'The provisioning API key is not configured. Ask an administrator to set it in SkynetA11y PDF Remediation > Configuration.'
+        })
+      );
+    }
+
+    return fetch(String(c.apiBaseUrl).replace(/\/+$/, '') + '/api/billing/provision-account', {
       method: 'POST',
       headers: {
-        'X-Api-Key': c.provisionApiKey,
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Api-Key': c.provisionApiKey
       },
       body: JSON.stringify({
         name: who.name,
         email: who.email,
         company_name: who.name,
         website: who.domain,
-        plan_id: c.planId,
-        country: c.country
+        plan_id: c.planId || 'free',
+        country: c.country || 'US'
       })
-    }).then(function (res) {
-      return res
-        .json()
-        .catch(function () {
-          return {}; /* non-JSON response */
-        })
-        .then(function (data) {
-          if (!res.ok || !data || !data.token) throw ApiError(res.status, data);
-
-          setToken(data.token);
-
-          return true;
-        });
-    });
+    }).then(readSession);
   }
 
-  /**
-   * Asks a host-supplied server endpoint for a session instead.
-   *
-   * Unused in the shipped configuration — set `sessionUrl` in config.js to an
-   * endpoint of your own that performs the provisioning call server-side, and
-   * the API key never reaches the browser. See README.md.
-   */
-  function serverSession() {
-    var c = config();
-    var headers = { Accept: 'application/json' };
-
-    if (c.csrfToken) headers['X-CSRF-TOKEN'] = c.csrfToken;
-
-    return fetch(c.sessionUrl, {
-      method: 'POST',
-      headers: headers,
-      credentials: 'same-origin'
-    })
-      .then(function (res) {
-        if (!res.ok) return false;
-
-        return res.json().then(function (data) {
-          if (!data || !data.token) return false;
-
-          setToken(data.token);
-
-          return true;
-        });
-      })
+  function readSession(res) {
+    return res
+      .json()
       .catch(function () {
-        return false;
+        return {}; /* non-JSON response */
+      })
+      .then(function (data) {
+        if (!res.ok || !data || !data.token) throw ApiError(res.status, data);
+
+        setToken(data.token);
+
+        return true;
       });
   }
 
   /**
-   * Resolves true once a session token is in storage, false otherwise.
-   *
-   * Never rejects: this is the silent path — boot, and the one retry after a
-   * 401 — where there is no dialog on screen to show a reason to. The details
-   * dialog calls `provisionSession` directly so it can surface the service's
-   * message.
+   * Silent sign-in used at boot and for the single retry after a 401.
+   * Resolves true once a session token is in storage, false otherwise - never
+   * rejects, because there is no dialog on screen to show a reason in. The
+   * details dialog calls `provisionSession` directly so it can surface the
+   * service's message.
    */
   function signIn() {
-    if (config().sessionUrl) return serverSession();
-
     return provisionSession().catch(function () {
       return false;
     });
@@ -562,7 +566,6 @@
     reconcileAccount: reconcileAccount,
 
     provisionSession: provisionSession,
-    serverSession: serverSession,
     signIn: signIn,
     ensureSession: ensureSession,
 

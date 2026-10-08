@@ -1,3 +1,4 @@
+/** @odoo-module ignore */
 /*
  * SkynetA11y PDF Remediation — workspace behaviour.
  *
@@ -1744,6 +1745,11 @@
 
     global.Icons.hydrate(document);
     API.adoptTokenFromQuery();
+
+    // "Back to Odoo" goes to the Odoo app list (backUrl comes from the server action).
+    var back = $('backToOdoo');
+    var backUrl = String(global.PdfConfig.get().backUrl || '');
+    if (back && backUrl.charAt(0) === '/' && backUrl.charAt(1) !== '/') back.setAttribute('href', backUrl);
 
     state.account = ACCOUNT.resolveAccount();
     state.accountDraft = ACCOUNT.accountDefaults();

@@ -1,3 +1,4 @@
+/** @odoo-module ignore */
 /*
  * Inline SVG icon set — a straight port of src/components/Icons.tsx.
  *

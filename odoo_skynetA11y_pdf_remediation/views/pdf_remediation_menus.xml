@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Opens the dashboard (client action in static/src/client/dashboard_action.js).
+
+        A server action (not a controller) so the module needs no Python files and
+        therefore loads through Apps > Import Module as well. It runs as the
+        clicking user, reads the module's system parameters with sudo and passes
+        them to the client action as params.
+    -->
+    <record id="action_pdf_remediation_dashboard" model="ir.actions.server">
+        <field name="name">SkynetA11y PDF Remediation</field>
+        <field name="model_id" ref="base.model_ir_config_parameter"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+icp = env['ir.config_parameter'].sudo()
+prefix = 'odoo_skynetA11y_pdf_remediation.'
+names = {
+    'api_base_url': 'apiBaseUrl', 'provision_api_key': 'provisionApiKey',
+    'account_name': 'accountName', 'account_email': 'accountEmail',
+    'website': 'website', 'plan_id': 'planId', 'country': 'country',
+    'dashboard_url': 'dashboardUrl', 'upgrade_url': 'upgradeUrl',
+    'active_domain': 'activeDomain', 'initial_tab': 'initialTab',
+    'token_key': 'tokenKey',
+}
+config = {}
+for key, name in names.items():
+    value = (icp.get_str(prefix + key) or '').strip()
+    if value:
+        config[name] = value
+# The logged-in Odoo user pre-fills the first-use dialog. Fall back to the login
+# when it is itself an email address (the default admin login is just "admin").
+login = user.login or ''
+config['prefillName'] = user.name or ''
+config['prefillEmail'] = user.email or (login if '@' in login else '')
+config['accountKey'] = env.cr.dbname
+# Back to the app list: the Apps screen for administrators, the home menu for everyone else (Apps is admin-only).
+config['backUrl'] = '/odoo/action-base.open_module_tree' if user.has_group('base.group_system') else '/odoo'
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'skyneta11y_pdf_remediation_dashboard',
+    'name': 'SkynetA11y PDF Remediation',
+    'params': {'config': config},
+}
+]]></field>
+    </record>
+
+    <menuitem id="menu_pdf_remediation_root"
+              name="SkynetA11y PDF Remediation"
+              sequence="60"
+              web_icon="odoo_skyneta11y_pdf_remediation,static/description/icon.png"
+              groups="group_pdf_remediation_user"/>
+
+    <menuitem id="menu_pdf_remediation_dashboard"
+              name="Dashboard"
+              parent="menu_pdf_remediation_root"
+              action="action_pdf_remediation_dashboard"
+              sequence="10"/>
+</odoo>

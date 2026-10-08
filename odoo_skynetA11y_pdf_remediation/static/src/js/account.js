@@ -1,3 +1,4 @@
+/** @odoo-module ignore */
 /*
  * The remediation account this page signs in as.
  *
@@ -131,7 +132,9 @@
    * the old `no-reply@<host>` behaviour.
    */
   function defaultDomain() {
-    return normaliseDomain(config().website || global.location.hostname);
+    var c = config();
+
+    return normaliseDomain(c.website || c.hostDomain || global.location.hostname);
   }
 
   /** Values the dialog opens with. */
@@ -143,8 +146,8 @@
     var c = config();
 
     return {
-      name: text(c.accountName),
-      email: text(c.accountEmail),
+      name: text(c.accountName) || text(c.prefillName),
+      email: text(c.accountEmail) || text(c.prefillEmail),
       domain: defaultDomain()
     };
   }
